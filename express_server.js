@@ -4,6 +4,13 @@ app.use(express.urlencoded({ extended: true }));
 const PORT = 8080; // default port 8080
 
 
+/* const users = {
+  1: {id: 1, email: 'haka@gmail.com', password: 'haka123'},
+  2: {id: 2, email: 'janja@gmail.com', password: 'janja123'},
+  3: {id: 3, email: 'zakaa@gmail.com', password: 'zaka123'}
+} */
+
+
 function generateRandomString() {
   let randomString = '';
   let characters = 'AB9wxyz';
@@ -74,4 +81,11 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 
 })
+
+app.post("/urls/:id/edit", (req, res) =>{
+  urlDatabase[req.params.id] = req.body.longURL
+  res.redirect("/urls");
+})
+
+
 
