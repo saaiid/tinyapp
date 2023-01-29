@@ -1,16 +1,28 @@
 const express = require("express");
 const app = express();
 const cookieParser = require('cookie-parser')
+const morgan = require('morgan');
+const { application } = require("express");
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+
 const PORT = 8080; // default port 8080
 
+app.set('view engine', 'ejs')
 
-/* const users = {
-  1: {id: 1, email: 'haka@gmail.com', password: 'haka123'},
-  2: {id: 2, email: 'janja@gmail.com', password: 'janja123'},
-  3: {id: 3, email: 'zakaa@gmail.com', password: 'zaka123'}
-} */
+//middleware
+app.use(morgan('dev'))
+
+
+//users login 
+const users = {
+  id: {
+    id: "abc",
+    email: "alice",
+    password: "123",
+  },
+ 
+};
 
 
 function generateRandomString() {
@@ -96,15 +108,51 @@ app.post("/urls/:id/edit", (req, res) =>{
   res.redirect("/urls");
 })
 
+//post login
 app.post("/login", (req,res) => {
   res.cookie("username", req.body.username)
   res.redirect("/urls");
 })
 
+//post logout 
 app.post("/logout", (req,res) => {
   res.clearCookie("username")
   res.redirect("/urls");
 })
+
+//registration page
+app.get("/register", (req, res) =>{
+ res.render("urls_registration")
+})
+
+
+app.post("/register", (req, res) =>{
+/*   const users: {
+    id: "uid",
+    email: "ualice",
+    password: "123",
+  }, */
+
+  //store and grab email from registration page to a variable
+  const email = req.body[email];
+  //store and grab password from registration page to a variable
+  const password = req.body[password];
+
+  //Check if they didn't give us username or password
+  if(!email || !password) {
+    return res.status(400).send('Please provide a username and a password')
+  }
+  //store and generate new ID using my generate ID function
+
+  //aad global user object
+
+  //redirect /urls page
+  res.redirect("/urls");
+
+})
+
+
+
 
 
 
